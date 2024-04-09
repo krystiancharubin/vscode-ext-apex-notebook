@@ -132,17 +132,6 @@ export default class NotebookController {
             apexCode: pCell.document.getText()
         });
 
-        if(response.logs) {
-            const outputText = response.logs
-                .split('\n')
-                .map(line => line.includes('USER_DEBUG') ? line.split('|').slice(2).join('|') : null)
-                .filter(Boolean)
-                .join('\n');    
-
-            pExecutionTask.appendOutput(new vscode.NotebookCellOutput([
-                vscode.NotebookCellOutputItem.text(outputText)
-            ]));
-        }
         if(response.diagnostic) {
             pExecutionTask.appendOutput(new vscode.NotebookCellOutput([
                 vscode.NotebookCellOutputItem.json(
@@ -150,6 +139,22 @@ export default class NotebookController {
                 )
             ]));
         } 
+        if(response.logs) {
+            if(vscode.workspace.getConfiguration().get(CONSTANTS.SETTING_KEY_DISPLAY_DEBUG_ONLY)) {
+                const outputText = response.logs
+                    .split('\n')
+                    .map(line => line.includes('USER_DEBUG') ? line.split('|').slice(2).join('|') : null)
+                    .filter(Boolean)
+                    .join('\n');    
+    
+                pExecutionTask.appendOutput(new vscode.NotebookCellOutput([
+                    vscode.NotebookCellOutputItem.text(outputText || 'No debugs found')
+                ]));
+            }
+            pExecutionTask.appendOutput(new vscode.NotebookCellOutput([
+                vscode.NotebookCellOutputItem.text(response.logs)
+            ]));
+        }
         
         return response.compiled && response.success;
     }
