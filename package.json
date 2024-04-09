@@ -54,6 +54,12 @@
           "description": "When executing a SOQL, should the JSON of the SOQL request be displayed in addition to the HTML table view?",
           "default": false,
           "order": 0
+        },
+        "anonymous-apex-notebook.showApexDebugOnlyCellOutput": {
+          "type": "boolean",
+          "description": "Should Anon Apex cells show an additional \"Debug Only\" output?",
+          "default": true,
+          "order": 0
         }
       }
     },
