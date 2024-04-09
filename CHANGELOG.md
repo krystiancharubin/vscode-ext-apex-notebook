@@ -2,6 +2,11 @@
 
 All notable changes to the "anonymous-apex-notebook" extension will be documented in this file.
 
+## 0.5.0
+
+- Added Debug Only view courtesy of [Agisole](https://github.com/agilsole)
+- Added new `anonymous-apex-notebook.showApexDebugOnlyCellOutput` config to optionally disable the debug only view
+
 ## 0.4.0
 
 - Added text for when no records are returned
